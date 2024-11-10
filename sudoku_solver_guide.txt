@@ -1,0 +1,23 @@
+Dependencies and Instructions for Sudoku Solver and Generator
+
+1. Dependencies:
+    - Python 3.12 or later
+    - pygame (for graphical interface)
+
+2. To install the required libraries, run the following command:
+    pip install pygame
+
+3. To run the project:
+    - Download the project files.
+    - Place the "naruto.jpeg" image in the appropriate directory or adjust the path in the code.
+    - Open the project folder in your terminal or command prompt.
+    - Run the following command:
+        python Sudoku.py
+
+4. Game Controls:
+    - Click on a cell to select it.
+    - Use the number keys (1-9) to enter a number in the selected cell.
+    - Press 'R' to generate a random board.
+    - Press 'Enter' to solve the puzzle.
+
+Enjoy the Sudoku solver and generator!
