@@ -1,5 +1,5 @@
 import pygame
-from Tool import generate_board, solve, find_empty, valid 
+from Tool import generate_board, solve, find_empty, valid
 from copy import deepcopy
 
 pygame.init()
@@ -7,7 +7,7 @@ pygame.init()
 class Board:
     def __init__(self, window):
         """Initializes a Board object with an initially empty puzzle."""
-        self.board = [[0 for _ in range(9)] for _ in range(9)]  # Initially empty 
+        self.board = [[0 for _ in range(9)] for _ in range(9)]  # Initially empty
         self.tiles = [
             [Tile(self.board[i][j], window, i * 60, j * 60, is_preset=False) for j in range(9)]
             for i in range(9)
@@ -37,20 +37,20 @@ class Board:
             pygame.display.flip()
             pygame.draw.rect(self.window, (0, 0, 255), (col * 60, row * 60, 60, 60), 4)  # Blue border for selected cell
 
-        pygame.display.flip()  
+        pygame.display.flip()
 
     def display_message(self, message, color=(255, 0, 0)):
-
         font = pygame.font.SysFont("lato", 30)
         text = font.render(message, True, color)
-        self.window.blit(text, (10, 550)) 
+        self.window.blit(text, (10, 550))  # Display message near the bottom
         pygame.display.flip()
 
     def visualsolve(self):
-       
         pygame.event.pump()
         empty = find_empty(self.board)
         if not empty:
+            # Puzzle solved
+            self.display_message("Puzzle Solved!", color=(0, 255, 0))  # Green color for success
             return True
 
         for num in range(1, 10):
@@ -67,7 +67,7 @@ class Board:
                 self.board[empty[0]][empty[1]] = 0
                 self.tiles[empty[0]][empty[1]].value = 0
                 self.tiles[empty[0]][empty[1]].is_user_input = False  # Mark it as unsolved
-                pygame.time.delay(100)  # Delay 
+                pygame.time.delay(100)  # Delay
                 self.draw_board()
 
         return False
@@ -91,32 +91,27 @@ class Board:
         self.selected_cell = (row, col)
 
     def generate_random_board(self):
-
-        self.board = generate_board()  
+        self.board = generate_board()
 
         for i in range(9):
             for j in range(9):
-
                 self.tiles[i][j].value = self.board[i][j]
                 self.tiles[i][j].is_user_input = False
-                self.tiles[i][j].is_preset = self.board[i][j] != 0 
+                self.tiles[i][j].is_preset = self.board[i][j] != 0
 
         self.draw_board()
 
 class Tile:
     def __init__(self, value, window, x1, y1, is_preset=False):
-        
         self.value = value
         self.window = window
         self.rect = pygame.Rect(x1, y1, 60, 60)
-        self.is_preset = is_preset  
-        self.is_user_input = False  
-
+        self.is_preset = is_preset  # Whether the value is preset or not
+        self.is_user_input = False   # Whether the value was input by the user
 
     def display(self, value, position):
-        
         font = pygame.font.SysFont("lato", 45)
-        
+
         # Determine the color 
         if self.is_preset:
             color = (0, 0, 0)  # Black for preset values
